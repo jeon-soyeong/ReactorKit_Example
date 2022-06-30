@@ -1,11 +1,14 @@
 PODS:
-  - Alamofire (5.5.0)
-  - Kingfisher (7.1.2)
+  - Alamofire (5.6.1)
+  - Kingfisher (7.2.4)
   - Moya/Core (15.0.0):
     - Alamofire (~> 5.0)
   - Moya/RxSwift (15.0.0):
     - Moya/Core
     - RxSwift (~> 6.0)
+  - ReactorKit (3.2.0):
+    - RxSwift (~> 6.0)
+    - WeakMapTable (~> 1.1)
   - RxCocoa (6.5.0):
     - RxRelay (= 6.5.0)
     - RxSwift (= 6.5.0)
@@ -17,12 +20,14 @@ PODS:
   - RxRelay (6.5.0):
     - RxSwift (= 6.5.0)
   - RxSwift (6.5.0)
-  - SnapKit (5.0.1)
-  - Then (2.7.0)
+  - SnapKit (5.6.0)
+  - Then (3.0.0)
+  - WeakMapTable (1.2.0)
 
 DEPENDENCIES:
   - Kingfisher
   - Moya/RxSwift
+  - ReactorKit
   - RxCocoa
   - RxCoreLocation
   - RxSwift
@@ -34,24 +39,28 @@ SPEC REPOS:
     - Alamofire
     - Kingfisher
     - Moya
+    - ReactorKit
     - RxCocoa
     - RxCoreLocation
     - RxRelay
     - RxSwift
     - SnapKit
     - Then
+    - WeakMapTable
 
 SPEC CHECKSUMS:
-  Alamofire: 1c4fb5369c3fe93d2857c780d8bbe09f06f97e7c
-  Kingfisher: 44ed6a8504763f27bab46163adfac83f5deb240c
+  Alamofire: 87bd8c952f9a4454320fce00d9cc3de57bcadaf5
+  Kingfisher: 2457be2121734e69e54a2312ecc0150eb9ae70b3
   Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
+  ReactorKit: e8b11d6b9c415405f381669b095c154a05b59eca
   RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
   RxCoreLocation: a78f4cbf32a4c6c47ecccbe22d41ff93b7e8c099
   RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
-  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
-  Then: acfe0be7e98221c6204e12f8161459606d5d822d
+  SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
+  Then: 844265ae87834bbe1147d91d5d41a404da2ec27d
+  WeakMapTable: 05c694ce8439a7a9ebabb56187287a63c57673d6
 
-PODFILE CHECKSUM: b7f11826c686736bd4bb2b3daa787962f4032714
+PODFILE CHECKSUM: 455c639940a3cc42e909926147765de240c97a4c
 
 COCOAPODS: 1.10.1
