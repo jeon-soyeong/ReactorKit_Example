@@ -213,16 +213,16 @@ class WeatherViewController: UIViewController {
         }
         
         reactor.state
-        .subscribe(onNext: { [weak self] state in
-            self?.weatherData = state.weatherData
-            if let weatherData = self?.weatherData {
-                self?.currentWeatherView.setupView(location: location, data: weatherData)
-                self?.clothingGuideCollectionView.reloadData()
-                self?.dailyWeatherCollectionView.reloadData()
-                self?.weeklyWeatherCollectionView.reloadData()
-            }
-        })
-        .disposed(by: disposeBag)
+            .subscribe(onNext: { [weak self] state in
+                self?.weatherData = state.weatherData
+                if let weatherData = self?.weatherData {
+                    self?.currentWeatherView.setupView(location: location, data: weatherData)
+                    self?.clothingGuideCollectionView.reloadData()
+                    self?.dailyWeatherCollectionView.reloadData()
+                    self?.weeklyWeatherCollectionView.reloadData()
+                }
+            })
+            .disposed(by: disposeBag)
         
         addButton.rx.tap
             .subscribe(onNext: { [weak self] in

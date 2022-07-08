@@ -11,11 +11,12 @@ import RxSwift
 
 class WeatherListViewController: UIViewController {
     weak var coordinator: WeatherListCoordinator?
-
-    private var weatherViewModel = WeatherViewModel()
+    
+    private let weatherReactor = WeatherReactor()
     private let disposeBag = DisposeBag()
-    var locationList: [Location] = []
-    var weatherDatas: [WeatherData] = []
+    private var weatherData: WeatherData?
+    private var weatherDatas: [WeatherData] = []
+    private var locationList: [Location] = []
     var completion: ((Int) -> Void)?
     
     private let weatherListTableView = UITableView().then {
@@ -38,8 +39,7 @@ class WeatherListViewController: UIViewController {
         setupView()
         setupTableView()
         registerNotification()
-        bindAction()
-        bindViewModel()
+        bind(reactor: weatherReactor)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,7 +54,7 @@ class WeatherListViewController: UIViewController {
         }
         
         for i in 0..<locationList.count {
-            weatherViewModel.action.fetch.onNext(locationList[i])
+            weatherReactor.action.onNext(.viewWillAppear(locationList[i]))
         }
     }
     
@@ -89,19 +89,20 @@ class WeatherListViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(addLocation), name: .addLocation, object: nil)
     }
     
-    private func bindAction() {
+    private func bind(reactor: WeatherReactor) {
+        reactor.state
+            .subscribe(onNext: { [weak self] state in
+                self?.weatherData = state.weatherData
+                if let weatherData = self?.weatherData {
+                    self?.weatherDatas.append(weatherData)
+                    self?.weatherListTableView.reloadData()
+                }
+            })
+            .disposed(by: disposeBag)
+        
         searchButton.rx.tap
             .subscribe(onNext: { [weak self] in
                 self?.coordinator?.pushSearchViewController()
-            })
-            .disposed(by: disposeBag)
-    }
-    
-    private func bindViewModel() {
-        weatherViewModel.state.weatherDataResponse
-            .subscribe(onNext: { [weak self] data in
-                self?.weatherDatas.append(data)
-                self?.weatherListTableView.reloadData()
             })
             .disposed(by: disposeBag)
     }
@@ -121,7 +122,7 @@ class WeatherListViewController: UIViewController {
         if addFlag {
             locationList.append(location)
             UserDefaultsManager.locationList = locationList
-            weatherViewModel.action.fetch.onNext(location)
+            weatherReactor.action.onNext(.viewWillAppear(location))
         }
     }
 }
@@ -161,7 +162,7 @@ extension WeatherListViewController: UITableViewDataSource {
         if editingStyle == .delete {
             locationList.remove(at: indexPath.row)
             UserDefaultsManager.locationList = locationList
-
+            
             weatherDatas.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
