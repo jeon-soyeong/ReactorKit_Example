@@ -14,7 +14,6 @@ class WeatherListViewController: UIViewController {
     
     private let weatherReactor = WeatherReactor()
     private let disposeBag = DisposeBag()
-    private var weatherData: WeatherData?
     private var weatherDatas: [WeatherData] = []
     private var locationList: [Location] = []
     var completion: ((Int) -> Void)?
@@ -92,8 +91,7 @@ class WeatherListViewController: UIViewController {
     private func bind(reactor: WeatherReactor) {
         reactor.state
             .subscribe(onNext: { [weak self] state in
-                self?.weatherData = state.weatherData
-                if let weatherData = self?.weatherData {
+                if let weatherData = state.weatherData {
                     self?.weatherDatas.append(weatherData)
                     self?.weatherListTableView.reloadData()
                 }
